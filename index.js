@@ -1,11 +1,12 @@
 const path = require('path')
 const Common = require('./utils/utils')
-
+const {
+  info
+} = require('./utils/log')
 //^[\u2E80-\u9FFF]+$ 匹配所有东亚区的语言
 //^[\u4E00-\u9FFF]+$ 匹配简体和繁体
 //^[\u4E00-\u9FA5]+$ 匹配简体
 const regx = /^[\u4E00-\u9FFF]+$/
-
 
 const dirPath = process.argv[2]
 if (!dirPath) {
@@ -49,7 +50,12 @@ async function transFile(filePath) {
     const res = await Common.readFile(filePath)
     //简体转繁体后的文件内容
     const result = mapString(res)
-    await Common.writeFile(filePath, result)
+    let response
+    try {
+      response = await Common.writeFile(filePath, result)
+    } catch (e) {
+      info(e)
+    }
   }
 
 }
