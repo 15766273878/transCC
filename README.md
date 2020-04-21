@@ -1,8 +1,7 @@
-# vue
 
-> A Vue.js project
+> 简体=>繁体
 
-## Build Setup
+## Setup
 
 ``` bash
 # install dependencies
