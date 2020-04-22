@@ -10,6 +10,8 @@ const regx = /^[\u4E00-\u9FFF]+$/
 
 const dirPath = process.argv[2]
 
+const transType = process.argv[3] || 0
+
 const types = ['js', 'vue', 'html'] //指定要替换的文件类型
 
 if (!dirPath) {
@@ -22,7 +24,6 @@ if (!dirPath) {
 mapFiles(dirPath)
 
 async function mapFiles(dirPath) {
-  const arr = []
   const res = await Common.stat(dirPath)
   //不是文件夹就进入改变文件
   if (!res.isDir) {
@@ -39,7 +40,6 @@ async function mapFiles(dirPath) {
       mapFiles(item.filePath)
     })
   }
-  return arr
 }
 
 
@@ -53,11 +53,10 @@ async function transFile(filePath) {
     const res = await Common.readFile(filePath)
     //简体转繁体后的文件内容
     const result = mapString(res)
-    let response
     try {
-      response = await Common.writeFile(filePath, result)
+      await Common.writeFile(filePath, result)
     } catch (e) {
-      info(e)
+      info(`文件替换发生错误[${filePath}] : ${e.toString()}`)
     }
   }
 
@@ -68,7 +67,7 @@ async function transFile(filePath) {
 function mapString(str) {
   return Array.prototype.map.call(str, item => {
     if (new RegExp(regx).test(item)) {
-      item = Common.tranformCC(item)
+      item = Common.tranformCC(item, transType)
     }
     return item
   }).join('')

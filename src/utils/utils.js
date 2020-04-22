@@ -6,10 +6,19 @@ const {
 const fs = require('fs')
 
 class Common {
+  /**
+   *
+   * @param {*} str 要替换的字符串
+   * @param {*} type 替换的类型, 0: 简体=>繁体 1:繁体=>简体
+   */
+  static tranformCC(str, type = 0) {
+    const tmp = [s, t]
+    const data = type ? tmp.reverse() : tmp
 
-  static tranformCC(str) {
-    const index = s.indexOf(str)
-    return index === -1 ? str : t[index] || str
+    const source = data[0]
+    const target = data[1]
+    const index = source.indexOf(str)
+    return index === -1 ? str : target[index] || str
   }
 
   static stat = path => new Promise((resolve, reject) => {
