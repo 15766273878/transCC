@@ -9,6 +9,9 @@ const {
 const regx = /^[\u4E00-\u9FFF]+$/
 
 const dirPath = process.argv[2]
+
+const types = ['js', 'vue', 'html'] //指定要替换的文件类型
+
 if (!dirPath) {
   console.error('请输入文件路径')
   return
@@ -42,9 +45,9 @@ async function mapFiles(dirPath) {
 
 //转换一个文件
 async function transFile(filePath) {
-  const ext = filePath.slice(filePath.lastIndexOf('.') + 1)
-  const types = ['js', 'vue']
-  //当是这些后缀才去转换
+  const ext = filePath.slice(filePath.lastIndexOf('.') + 1).toLocaleLowerCase()
+
+  //当文件类型是这些后缀才去转换
   if (types.includes(ext)) {
     //获取文件内容
     const res = await Common.readFile(filePath)
