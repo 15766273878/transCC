@@ -6,7 +6,7 @@ const {
 //^[\u2E80-\u9FFF]+$ 匹配所有东亚区的语言
 //^[\u4E00-\u9FFF]+$ 匹配简体和繁体
 //^[\u4E00-\u9FA5]+$ 匹配简体
-const regx = /^[\u4E00-\u9FFF]+$/
+const regx = /[\u4E00-\u9FA5]/
 
 const dirPath = process.argv[2]
 
@@ -65,8 +65,14 @@ async function transFile(filePath) {
 
 //获取转换一个文件的中文简体到繁体
 function mapString(str) {
+
+  //这个文件有一个中文才去遍历替换,优化性能
+  if (!regx.test(str)) {
+    return str
+  }
+
   return Array.prototype.map.call(str, item => {
-    if (new RegExp(regx).test(item)) {
+    if (regx.test(item)) {
       item = Common.tranformCC(item, transType)
     }
     return item
