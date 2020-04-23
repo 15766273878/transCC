@@ -1,8 +1,11 @@
 const path = require('path')
+const colors = require('colors');
+
 const Common = require('./utils/utils')
 const {
   info
 } = require('./utils/log')
+
 //^[\u2E80-\u9FFF]+$ 匹配所有东亚区的语言
 //^[\u4E00-\u9FFF]+$ 匹配简体和繁体
 //^[\u4E00-\u9FA5]+$ 匹配简体
@@ -15,7 +18,7 @@ const transType = process.argv[3] || 0
 const types = ['js', 'vue', 'html'] //指定要替换的文件类型
 
 if (!dirPath) {
-  console.error('请输入文件路径')
+  console.log('请输入文件路径'.yellow)
   return
 }
 

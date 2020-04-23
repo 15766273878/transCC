@@ -18,8 +18,7 @@ var log = {
     writeMessage(getDate() + ' [ DEBUG ] ' + message);
   },
   info: function (message) {
-    debugger;
-    console.log(getDate() + ' [ INFO ] ' + message);
+    console.log(((getDate() + ' [ INFO ] ' + message)).red);
     writeMessage(getDate() + ' [ INFO ] ' + message);
   },
   warn: function (message) {
